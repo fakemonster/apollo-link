@@ -122,6 +122,7 @@ export const createHttpLink = (linkOptions: HttpLink.Options = {}) => {
         return fromError(parseError);
       }
       chosenURI = newURI;
+      delete options.headers['content-type'];
     } else {
       try {
         (options as any).body = serializeFetchParameter(body, 'Payload');

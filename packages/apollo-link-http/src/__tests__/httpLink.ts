@@ -82,8 +82,9 @@ describe('HttpLink', () => {
       execute(link, { query: sampleQuery, variables, extensions }).subscribe({
         next: makeCallback(done, result => {
           const [uri, options] = fetchMock.lastCall();
-          const { method, body } = options;
+          const { method, body, headers } = options;
           expect(body).toBeUndefined();
+          expect(headers['content-type']).toBeUndefined();
           expect(method).toBe('GET');
           expect(uri).toBe(
             'http://data/?query=query%20SampleQuery%20%7B%0A%20%20stub%20%7B%0A%20%20%20%20id%0A%20%20%7D%0A%7D%0A&operationName=SampleQuery&variables=%7B%22params%22%3A%22stub%22%7D&extensions=%7B%22myExtension%22%3A%22foo%22%7D',
@@ -104,8 +105,9 @@ describe('HttpLink', () => {
       execute(link, { query: sampleQuery, variables }).subscribe({
         next: makeCallback(done, result => {
           const [uri, options] = fetchMock.lastCall();
-          const { method, body } = options;
+          const { method, body, headers } = options;
           expect(body).toBeUndefined();
+          expect(headers['content-type']).toBeUndefined();
           expect(method).toBe('GET');
           expect(uri).toBe(
             'http://data/?foo=bar&query=query%20SampleQuery%20%7B%0A%20%20stub%20%7B%0A%20%20%20%20id%0A%20%20%7D%0A%7D%0A&operationName=SampleQuery&variables=%7B%22params%22%3A%22stub%22%7D#frag',
@@ -130,8 +132,9 @@ describe('HttpLink', () => {
       }).subscribe(
         makeCallback(done, result => {
           const [uri, options] = fetchMock.lastCall();
-          const { method, body } = options;
+          const { method, body, headers } = options;
           expect(body).toBeUndefined();
+          expect(headers['content-type']).toBeUndefined();
           expect(method).toBe('GET');
           expect(uri).toBe(
             'http://data/?query=query%20SampleQuery%20%7B%0A%20%20stub%20%7B%0A%20%20%20%20id%0A%20%20%7D%0A%7D%0A&operationName=SampleQuery&variables=%7B%22params%22%3A%22stub%22%7D',
@@ -153,8 +156,9 @@ describe('HttpLink', () => {
       }).subscribe(
         makeCallback(done, result => {
           const [uri, options] = fetchMock.lastCall();
-          const { method, body } = options;
+          const { method, body, headers } = options;
           expect(body).toBeUndefined();
+          expect(headers['content-type']).toBeUndefined();
           expect(method).toBe('GET');
           expect(uri).toBe(
             'http://data/?query=query%20SampleQuery%20%7B%0A%20%20stub%20%7B%0A%20%20%20%20id%0A%20%20%7D%0A%7D%0A&operationName=SampleQuery&variables=%7B%22params%22%3A%22stub%22%7D',
@@ -176,8 +180,9 @@ describe('HttpLink', () => {
       }).subscribe(
         makeCallback(done, result => {
           const [uri, options] = fetchMock.lastCall();
-          const { method, body } = options;
+          const { method, body, headers } = options;
           expect(body).toBeDefined();
+          expect(headers['content-type']).toBe('application/json');
           expect(method).toBe('POST');
           expect(uri).toBe('http://data/');
         }),
